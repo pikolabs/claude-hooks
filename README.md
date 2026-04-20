@@ -94,4 +94,4 @@ Populated at release cut. The release SHA-256 of `bootstrap.sh` must match exact
 
 | Tag | `bootstrap.sh` SHA-256 |
 | --- | ---------------------- |
-| v1.0.0 | _to be populated when the tag is cut_ |
+| v1.0.0 | `147c92a8a48bb74cc3513a28e04018782eca91bcded76634dba2ccf1e3d29788` |
