@@ -55,7 +55,7 @@ else
     log "cloning ${REPO_URL} into ${REPO_DIR}"
     git clone "${REPO_URL}" "${REPO_DIR}"
   fi
-  local_default="$(cat "${REPO_DIR}/VERSION" | tr -d '[:space:]')"
+  local_default="$(tr -d '[:space:]' < "${REPO_DIR}/VERSION")"
   tag="${REQUESTED_TAG:-v${local_default}}"
   log "checking out ${tag}"
   git -C "${REPO_DIR}" checkout "${tag}"
