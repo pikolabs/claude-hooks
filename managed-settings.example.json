@@ -1,0 +1,119 @@
+{
+  "forceRemoteSettingsRefresh": true,
+  "env": {
+    "ANTHROPIC_LOG_LEVEL": "info",
+    "DISABLE_TELEMETRY": "0",
+    "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": "0",
+    "PIKO_ENV": "dev"
+  },
+  "permissions": {
+    "allow": [
+      "Bash(go build:*)",
+      "Bash(go test:*)",
+      "Bash(go vet:*)",
+      "Bash(go run:*)",
+      "Bash(go mod:*)",
+      "Bash(npm:*)",
+      "Bash(pnpm:*)",
+      "Bash(bun:*)",
+      "Bash(node:*)",
+      "Bash(npx tsc:*)",
+      "Bash(git checkout:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)",
+      "Bash(git pull:*)",
+      "Bash(git fetch:*)",
+      "Bash(git stash:*)",
+      "Bash(gh pr:*)",
+      "Bash(docker compose:*)",
+      "Bash(docker build:*)",
+      "Bash(docker run:*)",
+      "Bash(kubectl get:*)",
+      "Bash(kubectl describe:*)",
+      "Bash(kubectl logs:*)",
+      "Bash(kubectl apply:*)",
+      "Bash(aws s3 ls:*)",
+      "Bash(aws s3 cp:*)",
+      "Bash(terraform plan:*)",
+      "Bash(terraform apply:*)",
+      "Bash(terraform validate:*)",
+      "Bash(pulumi preview:*)",
+      "Bash(pulumi up:*)",
+      "Bash(make:*)",
+      "Bash(python3:*)",
+      "Bash(pip:*)",
+      "Bash(cargo:*)",
+      "Bash(psql:*)",
+      "Bash(hardhat compile:*)",
+      "Bash(hardhat test:*)",
+      "Bash(forge:*)",
+      "Bash(find:*)",
+      "Bash(grep:*)",
+      "Bash(cat:*)",
+      "Bash(ls:*)",
+      "Bash(chmod:*)",
+      "Bash(curl:*)",
+      "Bash(jq:*)"
+    ],
+    "deny": [
+      "Read(~/.aws/credentials)",
+      "Read(~/.aws/config)",
+      "Read(~/.ssh/id_*)",
+      "Read(~/.ssh/*_rsa)",
+      "Read(~/.ssh/*_ed25519)",
+      "Read(~/.netrc)",
+      "Read(~/.npmrc)",
+      "Read(~/.kube/config)",
+      "Read(~/.docker/config.json)",
+      "Read(**/.env)",
+      "Read(**/.env.*)",
+      "Read(**/*.pem)",
+      "Read(**/*.key)",
+      "Read(**/contracts/keys/**)",
+      "Write(**/.env)",
+      "Write(**/.env.*)",
+      "Write(**/*.pem)",
+      "Write(**/*.key)",
+      "Write(**/*.p12)",
+      "Write(**/*.jks)",
+      "Write(**/contracts/deployments/mainnet.json)",
+      "Write(**/contracts/keys/**)",
+      "Write(**/infra/pulumi/prod/**)",
+      "Edit(**/.env)",
+      "Edit(**/.env.*)",
+      "Edit(**/*.pem)",
+      "Edit(**/*.key)",
+      "Edit(**/contracts/deployments/mainnet.json)",
+      "Edit(**/contracts/keys/**)",
+      "Edit(**/infra/pulumi/prod/**)"
+    ]
+  },
+  "allowedMcpServers": [
+    { "serverName": "atlassian" },
+    { "serverName": "playwright" }
+  ],
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          { "type": "command", "command": "$HOME/.piko/hooks/session-start.sh" }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          { "type": "command", "command": "$HOME/.piko/hooks/guard.sh" }
+        ]
+      },
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          { "type": "command", "command": "$HOME/.piko/hooks/write-guard.sh" }
+        ]
+      }
+    ]
+  }
+}

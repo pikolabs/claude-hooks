@@ -1,0 +1,169 @@
+{
+  "version": "1.0.0",
+  "patterns": [
+    {
+      "label": "destructive-rm-root",
+      "pattern": "rm[[:space:]]+-[a-zA-Z]*[rR][a-zA-Z]*f?[[:space:]]+/[[:space:]]*$"
+    },
+    {
+      "label": "destructive-rm-root-wildcard",
+      "pattern": "rm[[:space:]]+-[a-zA-Z]*[rR][a-zA-Z]*f?[[:space:]]+/\\*"
+    },
+    {
+      "label": "destructive-rm-home",
+      "pattern": "rm[[:space:]]+-[a-zA-Z]*[rR][a-zA-Z]*f?[[:space:]]+~[[:space:]]*$"
+    },
+    {
+      "label": "destructive-rm-home-slash",
+      "pattern": "rm[[:space:]]+-[a-zA-Z]*[rR][a-zA-Z]*f?[[:space:]]+~/"
+    },
+    {
+      "label": "git-force-push-main",
+      "pattern": "git[[:space:]]+push[[:space:]]+.*(-f([[:space:]]|$)|--force).*[[:space:]](main|develop|master)([[:space:]]|$)"
+    },
+    {
+      "label": "git-force-push-short",
+      "pattern": "git[[:space:]]+push[[:space:]]+--force[[:space:]]+origin[[:space:]]+(main|develop|master)"
+    },
+    {
+      "label": "git-commit-no-verify",
+      "pattern": "git[[:space:]]+commit[[:space:]]+.*--no-verify"
+    },
+    {
+      "label": "git-push-no-verify",
+      "pattern": "git[[:space:]]+push[[:space:]]+.*--no-verify"
+    },
+    {
+      "label": "git-no-gpg-sign",
+      "pattern": "git[[:space:]]+commit[[:space:]]+.*--no-gpg-sign"
+    },
+    {
+      "label": "git-reset-hard-origin",
+      "pattern": "git[[:space:]]+reset[[:space:]]+--hard[[:space:]]+origin"
+    },
+    {
+      "label": "git-clean-fdx",
+      "pattern": "git[[:space:]]+clean[[:space:]]+-[a-zA-Z]*f[a-zA-Z]*d[a-zA-Z]*x"
+    },
+    {
+      "label": "git-branch-delete-protected",
+      "pattern": "git[[:space:]]+branch[[:space:]]+-D[[:space:]]+(main|develop|master)"
+    },
+    {
+      "label": "git-filter-branch",
+      "pattern": "git[[:space:]]+filter-(branch|repo)"
+    },
+    {
+      "label": "pipe-to-shell-curl",
+      "pattern": "curl[[:space:]]+[^|]*\\|[[:space:]]*(bash|sh|zsh)([[:space:]]|$)"
+    },
+    {
+      "label": "pipe-to-shell-wget",
+      "pattern": "wget[[:space:]]+[^|]*\\|[[:space:]]*(bash|sh|zsh)([[:space:]]|$)"
+    },
+    {
+      "label": "read-aws-credentials",
+      "pattern": "(cat|less|more|bat|head|tail|cp|scp|rsync)[[:space:]]+.*\\.aws/credentials"
+    },
+    {
+      "label": "read-aws-config",
+      "pattern": "(cat|less|more|bat|head|tail|cp|scp|rsync)[[:space:]]+.*\\.aws/config([[:space:]]|$)"
+    },
+    {
+      "label": "read-ssh-private-key",
+      "pattern": "(cat|less|more|bat|head|tail|cp|scp|rsync)[[:space:]]+.*\\.ssh/(id_|.*_rsa|.*_ed25519|.*_ecdsa)"
+    },
+    {
+      "label": "read-netrc",
+      "pattern": "(cat|less|more|bat|head|tail|cp|scp|rsync)[[:space:]]+.*\\.netrc"
+    },
+    {
+      "label": "read-npmrc",
+      "pattern": "(cat|less|more|bat|head|tail|cp|scp|rsync)[[:space:]]+.*\\.npmrc"
+    },
+    {
+      "label": "read-kubeconfig",
+      "pattern": "(cat|less|more|bat|head|tail|cp|scp|rsync)[[:space:]]+.*(\\.kube/config|kubeconfig)"
+    },
+    {
+      "label": "read-docker-config",
+      "pattern": "(cat|less|more|bat|head|tail|cp|scp|rsync)[[:space:]]+.*\\.docker/config\\.json"
+    },
+    {
+      "label": "read-env-file",
+      "pattern": "(cat|less|more|bat|head|tail)[[:space:]]+.*\\.env(\\.|[[:space:]]|$)"
+    },
+    {
+      "label": "macos-keychain-export",
+      "pattern": "security[[:space:]]+(find-generic-password|find-internet-password|export)"
+    },
+    {
+      "label": "curl-exfil-data",
+      "pattern": "curl[[:space:]]+.*(-d[[:space:]]+@|--data-binary[[:space:]]+@|-F[[:space:]]+[^[:space:]]+=@)"
+    },
+    {
+      "label": "terraform-destroy",
+      "pattern": "terraform[[:space:]]+destroy([[:space:]]+[^-]|[[:space:]]*$)"
+    },
+    {
+      "label": "pulumi-destroy",
+      "pattern": "pulumi[[:space:]]+destroy"
+    },
+    {
+      "label": "kubectl-delete-ns",
+      "pattern": "kubectl[[:space:]]+delete[[:space:]]+(ns|namespace)"
+    },
+    {
+      "label": "kubectl-delete-all",
+      "pattern": "kubectl[[:space:]]+delete[[:space:]]+.*--all([[:space:]]|$)"
+    },
+    {
+      "label": "aws-s3-rb-force",
+      "pattern": "aws[[:space:]]+s3[[:space:]]+rb[[:space:]]+.*--force"
+    },
+    {
+      "label": "aws-rds-delete",
+      "pattern": "aws[[:space:]]+rds[[:space:]]+delete-db-instance"
+    },
+    {
+      "label": "aws-dynamodb-delete",
+      "pattern": "aws[[:space:]]+dynamodb[[:space:]]+delete-table"
+    },
+    {
+      "label": "sql-drop-database",
+      "pattern": "(DROP|drop)[[:space:]]+(DATABASE|database|SCHEMA|schema)"
+    },
+    {
+      "label": "sql-truncate",
+      "pattern": "(TRUNCATE|truncate)[[:space:]]+"
+    },
+    {
+      "label": "docker-prune-all",
+      "pattern": "docker[[:space:]]+system[[:space:]]+prune[[:space:]]+.*-a"
+    },
+    {
+      "label": "docker-volume-rm",
+      "pattern": "docker[[:space:]]+volume[[:space:]]+rm"
+    },
+    {
+      "label": "npm-install-global",
+      "pattern": "npm[[:space:]]+(install|i)[[:space:]]+.*-g([[:space:]]|$)"
+    },
+    {
+      "label": "hardhat-mainnet",
+      "pattern": "hardhat[[:space:]]+run[[:space:]]+.*--network[[:space:]]+mainnet"
+    },
+    {
+      "label": "cast-send-mainnet",
+      "pattern": "cast[[:space:]]+send[[:space:]]+.*--rpc-url[[:space:]]+.*mainnet"
+    },
+    {
+      "label": "read-contract-keys",
+      "pattern": "(cat|less|more|bat|head|tail|cp|scp|rsync)[[:space:]]+.*contracts/keys/"
+    },
+    {
+      "label": "read-env-mainnet",
+      "pattern": "(cat|less|more|bat|head|tail|cp|scp|rsync)[[:space:]]+.*\\.env\\.mainnet"
+    }
+  ]
+}

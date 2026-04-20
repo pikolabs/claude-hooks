@@ -1,0 +1,33 @@
+name: test
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+    tags: ['v*']
+
+jobs:
+  lint-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y shellcheck jq
+          # Install bats-core 1.11.x from the upstream tarball to avoid apt lag.
+          curl -fsSL https://github.com/bats-core/bats-core/archive/refs/tags/v1.11.0.tar.gz -o bats.tar.gz
+          tar -xzf bats.tar.gz
+          sudo bats-core-1.11.0/install.sh /usr/local
+
+      - name: Verify JSON policy parses
+        run: jq empty policy/deny.json
+
+      - name: shellcheck
+        run: |
+          shellcheck hooks/guard.sh hooks/write-guard.sh hooks/session-start.sh hooks/lib/audit.sh
+          shellcheck git-hooks/pre-commit bootstrap.sh
+
+      - name: bats
+        run: bats --print-output-on-failure test/

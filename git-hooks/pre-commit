@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+# Piko git pre-commit hook. Enforces pikolabs.ai email identity on every commit,
+# whether the commit is driven by Claude or not.
+# Bypass (documented, audit-logged): PIKO_HOOK_BYPASS=1 git commit ...
+
+set -euo pipefail
+
+email="$(git config user.email 2>/dev/null || true)"
+
+if [[ "${email}" =~ @pikolabs\.ai$ ]]; then
+  exit 0
+fi
+
+if [ "${PIKO_HOOK_BYPASS:-0}" = "1" ]; then
+  audit_dir="${HOME}/.piko"
+  mkdir -p "${audit_dir}"
+  printf '%s BYPASS-PRECOMMIT user=%s pwd=%s email=%s\n' \
+    "$(date -u +%FT%TZ)" "${USER:-unknown}" "${PWD}" "${email:-<unset>}" \
+    >> "${audit_dir}/hook-audit.log"
+  exit 0
+fi
+
+{
+  echo "error: commit blocked by PikoLabs policy"
+  echo "  rule:  git user.email must end with @pikolabs.ai"
+  echo "  got:   '${email:-<unset>}'"
+  echo "  fix:   git config user.email <you>@pikolabs.ai"
+  echo "  override: PIKO_HOOK_BYPASS=1 git commit ... (audit-logged)"
+} >&2
+exit 1
