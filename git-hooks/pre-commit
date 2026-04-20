@@ -1,9 +1,26 @@
 #!/usr/bin/env bash
-# Piko git pre-commit hook. Enforces pikolabs.ai email identity on every commit,
-# whether the commit is driven by Claude or not.
+# Piko git pre-commit hook. Enforces pikolabs.ai email identity on commits
+# in PikoLabs repositories only, whether the commit is driven by Claude or not.
+# Non-pikolabs repositories (personal projects) are left untouched so the
+# global core.hooksPath installation does not overreach.
 # Bypass (documented, audit-logged): PIKO_HOOK_BYPASS=1 git commit ...
 
 set -euo pipefail
+
+# Scope: enforce only when the current repo's origin points at pikolabs.
+remote="$(git config --get remote.origin.url 2>/dev/null || true)"
+case "${remote}" in
+  *pikolabs/*|*pikolabs.ai*|*github-piko:*)
+    ;;
+  "")
+    # No origin configured (fresh init) — skip. The SessionStart hook still
+    # enforces identity if this repo is opened in Claude.
+    exit 0
+    ;;
+  *)
+    exit 0
+    ;;
+esac
 
 email="$(git config user.email 2>/dev/null || true)"
 
